@@ -1,0 +1,28 @@
+<!-- custom-tab-bar/index.wxml -->
+<!-- 国风自定义底部导航栏 — 4个Tab -->
+
+<view class="tabbar">
+  <view
+    class="tab-item {{selected === index ? 'tab-active' : ''}}"
+    wx:for="{{list}}"
+    wx:key="index"
+    data-index="{{index}}"
+    bindtap="switchTab"
+  >
+    <!-- 图标区域 -->
+    <view class="tab-icon-wrap">
+      <view class="tab-icon {{item.iconClass}}">
+        <!-- CSS绘制的国风图标 -->
+        <view class="icon-shape"></view>
+      </view>
+      <!-- 选中态金色光晕 -->
+      <view class="icon-glow" wx:if="{{selected === index}}"></view>
+    </view>
+    
+    <!-- 文字标签 -->
+    <text class="tab-label">{{item.text}}</text>
+    
+    <!-- 选中态顶部指示线 -->
+    <view class="tab-indicator" wx:if="{{selected === index}}"></view>
+  </view>
+</view>

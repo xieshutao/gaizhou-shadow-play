@@ -251,11 +251,8 @@ Page({
     })
   },
 
-  // ===== 导航 =====
-  onTabHome: function () {
-    wx.redirectTo({ url: '/pages/index/index' })
-  },
-  onTabInteractive: function () {
-    wx.redirectTo({ url: '/pages/interactive/interactive' })
+  // ===== 返回 =====
+  onBack: function () {
+    wx.navigateBack()
   }
 })

@@ -28,7 +28,7 @@ Page({
     ]
   },
 
-  onTabHome() {
-    wx.redirectTo({ url: '/pages/index/index' })
+  onBack() {
+    wx.navigateBack()
   }
 })

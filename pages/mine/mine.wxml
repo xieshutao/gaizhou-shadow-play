@@ -1,0 +1,116 @@
+<!-- pages/mine/mine.wxml -->
+<!-- 我的 — 国风个人中心 -->
+
+<view class="page-root">
+
+  <!-- 暗纹背景 -->
+  <view class="bg-layer"></view>
+
+  <scroll-view class="main-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+
+    <!-- 顶部标题 -->
+    <view class="header">
+      <text class="header-title">我 的</text>
+      <view class="gold-divider"></view>
+    </view>
+
+    <!-- 用户信息卡片 -->
+    <view class="user-card gold-card">
+      <!-- 未授权 -->
+      <view class="user-info" wx:if="{{!hasUserInfo}}">
+        <view class="avatar-placeholder">
+          <text class="avatar-icon">☯</text>
+        </view>
+        <button class="auth-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">
+          <text>点击授权用户信息</text>
+        </button>
+      </view>
+
+      <!-- 已授权 -->
+      <view class="user-info" wx:if="{{hasUserInfo}}">
+        <image class="avatar-img" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+        <view class="user-text">
+          <text class="user-name">{{userInfo.nickName}}</text>
+          <text class="user-desc">皮影戏爱好者</text>
+        </view>
+      </view>
+
+      <!-- 统计 -->
+      <view class="stats-row">
+        <view class="stat-item">
+          <text class="stat-num">{{chatCount}}</text>
+          <text class="stat-label">对话次数</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-num">{{playCount}}</text>
+          <text class="stat-label">造戏组合</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 菜单列表 -->
+    <view class="menu-section">
+      <view
+        class="menu-item gold-card anim-fade-in"
+        wx:for="{{menus}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onTapMenu"
+      >
+        <view class="mi-left">
+          <text class="mi-icon">{{item.icon}}</text>
+          <view class="mi-text">
+            <text class="mi-title">{{item.title}}</text>
+            <text class="mi-desc">{{item.desc}}</text>
+          </view>
+        </view>
+        <text class="mi-arrow">〉</text>
+      </view>
+    </view>
+
+    <!-- 设置 -->
+    <view class="settings-section">
+      <view class="section-label">
+        <view class="sl-deco"></view>
+        <text class="sl-text">设 置</text>
+        <view class="sl-deco"></view>
+      </view>
+
+      <view class="setting-item gold-card">
+        <view class="si-left">
+          <text class="si-icon">🔊</text>
+          <text class="si-title">音效开关</text>
+        </view>
+        <switch
+          checked="{{soundEnabled}}"
+          bindchange="onToggleSound"
+          color="#D4AF37"
+        />
+      </view>
+
+      <view class="setting-item gold-card">
+        <view class="si-left">
+          <text class="si-icon">💬</text>
+          <text class="si-title">字幕显示</text>
+        </view>
+        <switch
+          checked="{{subtitleEnabled}}"
+          bindchange="onToggleSubtitle"
+          color="#D4AF37"
+        />
+      </view>
+    </view>
+
+    <!-- 底部版本 -->
+    <view class="version-info">
+      <text>盖州皮影戏 v1.0.0</text>
+      <text class="vi-sub">光影两百年 · 非遗传承</text>
+    </view>
+
+    <!-- 留白 -->
+    <view class="bottom-spacer"></view>
+
+  </scroll-view>
+
+</view>

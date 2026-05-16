@@ -13,11 +13,13 @@ Page({
 
   // 右侧悬浮按钮
   onTapFloatBtn() {
-    wx.navigateTo({ url: '/pages/interactive/interactive' })
+    wx.switchTab({ url: '/pages/interactive/interactive' })
   },
 
-  // 底部标签
-  onTabInteractive() {
-    wx.redirectTo({ url: '/pages/interactive/interactive' })
+  // 同步 tabBar 选中态
+  onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 0 })
+    }
   }
 })

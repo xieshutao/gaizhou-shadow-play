@@ -3,9 +3,19 @@
     "pages/index/index",
     "pages/interactive/interactive",
     "pages/elder-chat/elder-chat",
+    "pages/mine/mine",
     "pages/create-play/create-play",
     "pages/knowledge/knowledge"
   ],
+  "tabBar": {
+    "custom": true,
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/interactive/interactive", "text": "互动馆" },
+      { "pagePath": "pages/elder-chat/elder-chat", "text": "作坊" },
+      { "pagePath": "pages/mine/mine", "text": "我的" }
+    ]
+  },
   "window": {
     "navigationStyle": "custom",
     "backgroundTextStyle": "light",

@@ -27,7 +27,9 @@ Page({
     wx.navigateTo({ url: '/pages/knowledge/knowledge' })
   },
 
-  onTabHome() {
-    wx.redirectTo({ url: '/pages/index/index' })
+  onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 1 })
+    }
   }
 })

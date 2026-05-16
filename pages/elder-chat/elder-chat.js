@@ -288,13 +288,11 @@ Page({
     pipeline.runFromText(text)
   },
 
-  // ========== 导航 ==========
-  onTabHome() {
-    this._stopBreath()
-    wx.redirectTo({ url: '/pages/index/index' })
-  },
-  onTabInteractive() {
-    this._stopBreath()
-    wx.redirectTo({ url: '/pages/interactive/interactive' })
+  // ========== tabBar 同步 ==========
+  onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 2 })
+    }
+    this._startBreath()
   }
 })

@@ -1,0 +1,163 @@
+/* pages/mine/mine.wxss */
+/* 我的 — 国风个人中心 */
+
+page { height: 100vh; background: #000; overflow: hidden; }
+.page-root { position: relative; width: 100vw; height: 100vh; }
+
+/* 暗纹背景 */
+.bg-layer {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.04) 0%, transparent 70%),
+    linear-gradient(180deg, #0a0402 0%, #0d0603 50%, #060201 100%);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 3rpx, rgba(212,175,55,0.012) 3rpx, rgba(212,175,55,0.012) 4rpx);
+}
+
+/* 主滚动 */
+.main-scroll {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 2; padding: 0 36rpx;
+}
+
+/* 顶部标题 */
+.header {
+  display: flex; flex-direction: column; align-items: center;
+  padding-top: calc(env(safe-area-inset-top) + 80rpx);
+  padding-bottom: 30rpx; gap: 16rpx;
+}
+.header-title {
+  font-size: 56rpx; font-weight: bold; color: #D4AF37;
+  letter-spacing: 18rpx; font-family: "SimSun","宋体",serif;
+  text-shadow: 0 0 30rpx rgba(212,175,55,0.4);
+}
+.gold-divider {
+  width: 280rpx; height: 1rpx;
+  background: linear-gradient(to right, transparent, rgba(212,175,55,0.4), transparent);
+}
+
+/* ===== 用户卡片 ===== */
+.user-card {
+  padding: 36rpx; margin-bottom: 30rpx;
+  display: flex; flex-direction: column; gap: 28rpx;
+}
+.user-info {
+  display: flex; align-items: center; gap: 24rpx;
+}
+.avatar-placeholder {
+  width: 100rpx; height: 100rpx; border-radius: 50%;
+  border: 2rpx solid rgba(212,175,55,0.3);
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(212,175,55,0.06);
+}
+.avatar-icon { font-size: 48rpx; color: rgba(212,175,55,0.5); }
+.avatar-img {
+  width: 100rpx; height: 100rpx; border-radius: 50%;
+  border: 2rpx solid #D4AF37;
+}
+.user-text { display: flex; flex-direction: column; gap: 6rpx; }
+.user-name {
+  font-size: 32rpx; color: #D4AF37; font-weight: bold;
+  letter-spacing: 4rpx;
+}
+.user-desc {
+  font-size: 22rpx; color: rgba(255,255,255,0.35);
+  letter-spacing: 2rpx;
+}
+.auth-btn {
+  background: transparent; border: 1rpx solid rgba(212,175,55,0.3);
+  border-radius: 8rpx; padding: 12rpx 28rpx;
+  font-size: 24rpx; color: rgba(212,175,55,0.6);
+}
+.auth-btn::after { border: none; }
+
+/* 统计 */
+.stats-row {
+  display: flex; align-items: center; justify-content: center;
+  padding-top: 20rpx;
+  border-top: 1rpx solid rgba(212,175,55,0.1);
+}
+.stat-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6rpx;
+}
+.stat-num {
+  font-size: 40rpx; color: #D4AF37; font-weight: bold;
+  font-family: "SimSun","宋体",serif;
+}
+.stat-label {
+  font-size: 20rpx; color: rgba(255,255,255,0.3); letter-spacing: 2rpx;
+}
+.stat-divider {
+  width: 1rpx; height: 50rpx;
+  background: rgba(212,175,55,0.15);
+}
+
+/* ===== 菜单 ===== */
+.menu-section {
+  display: flex; flex-direction: column; gap: 16rpx; margin-bottom: 36rpx;
+}
+.menu-item {
+  padding: 28rpx; display: flex; align-items: center;
+  justify-content: space-between;
+  animation: fadeIn 0.4s ease-out both;
+}
+.menu-item:nth-child(2) { animation-delay: 0.1s; }
+.menu-item:nth-child(3) { animation-delay: 0.2s; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mi-left { display: flex; align-items: center; gap: 20rpx; }
+.mi-icon { font-size: 36rpx; color: #D4AF37; }
+.mi-text { display: flex; flex-direction: column; gap: 4rpx; }
+.mi-title {
+  font-size: 28rpx; color: rgba(255,240,210,0.85);
+  letter-spacing: 4rpx; font-weight: bold;
+}
+.mi-desc {
+  font-size: 20rpx; color: rgba(255,255,255,0.25);
+  letter-spacing: 1rpx;
+}
+.mi-arrow { font-size: 28rpx; color: rgba(212,175,55,0.3); }
+
+/* ===== 设置 ===== */
+.settings-section {
+  display: flex; flex-direction: column; gap: 16rpx; margin-bottom: 36rpx;
+}
+.section-label {
+  display: flex; align-items: center; justify-content: center; gap: 16rpx;
+  margin-bottom: 8rpx;
+}
+.sl-deco {
+  width: 50rpx; height: 1rpx;
+  background: rgba(212,175,55,0.25);
+}
+.sl-text {
+  font-size: 26rpx; color: rgba(212,175,55,0.5);
+  letter-spacing: 8rpx;
+}
+.setting-item {
+  padding: 24rpx 28rpx; display: flex;
+  align-items: center; justify-content: space-between;
+}
+.si-left { display: flex; align-items: center; gap: 16rpx; }
+.si-icon { font-size: 32rpx; }
+.si-title {
+  font-size: 26rpx; color: rgba(255,240,210,0.7);
+  letter-spacing: 2rpx;
+}
+
+/* ===== 版本 ===== */
+.version-info {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8rpx; padding: 20rpx 0;
+}
+.version-info text {
+  font-size: 20rpx; color: rgba(255,255,255,0.15); letter-spacing: 2rpx;
+}
+.vi-sub { letter-spacing: 4rpx; }
+
+/* 底部留白 */
+.bottom-spacer { height: 100rpx; }
