@@ -28,16 +28,13 @@
     </view>
 
     <view class="char-spot char-master {{highlightedChar === 'master' ? 'char-glow' : ''}}" bindtap="onCharTapMaster">
-      <image class="char-img" src="/image3/laor1.png" mode="aspectFit"></image>
-      <view class="char-label"><text>老师傅</text></view>
+      <view class="char-label char-label-big"><text>老师傅</text></view>
     </view>
     <view class="char-spot char-young {{highlightedChar === 'young' ? 'char-glow' : ''}}" bindtap="onCharTapYoung">
-      <image class="char-img" src="/image3/nianq1.png" mode="aspectFit"></image>
-      <view class="char-label"><text>年轻学徒</text></view>
+      <view class="char-label char-label-big"><text>年轻学徒</text></view>
     </view>
     <view class="char-spot char-teen {{highlightedChar === 'teen' ? 'char-glow' : ''}}" bindtap="onCharTapTeen">
-      <image class="char-img" src="/image3/shaonian.png" mode="aspectFit"></image>
-      <view class="char-label"><text>小徒弟</text></view>
+      <view class="char-label char-label-big"><text>小徒弟</text></view>
     </view>
   </view>
 
