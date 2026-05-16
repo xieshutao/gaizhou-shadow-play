@@ -261,12 +261,11 @@ page {
 /* ── 右上角音乐图标 z-index:25 ── */
 .music-icon {
   position: absolute;
-  top: 50%;
-  right: 20rpx;
-  transform: translateY(-50%);
+  top: calc(env(safe-area-inset-top) + 258rpx);
+  right: 120rpx;
   z-index: 25;
-  width: 56rpx;
-  height: 56rpx;
+  width: 70rpx;
+  height: 70rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -277,7 +276,7 @@ page {
 }
 
 .mi-note {
-  font-size: 26rpx;
+  font-size: 32rpx;
   color: rgba(212, 175, 55, 0.6);
   transition: color 0.3s;
 }

@@ -35,6 +35,9 @@ Page({
       this.setData({ isMusicPlaying: true })
     }
 
+    // ★ 自动播放
+    bgAudio.play()
+
     this.bgAudio = bgAudio
   },
 
