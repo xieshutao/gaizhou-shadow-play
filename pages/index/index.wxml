@@ -52,6 +52,14 @@
     </view>
   </view>
 
+  <!-- 右上角音乐播放按钮 -->
+  <view class="music-btn {{isMusicPlaying ? 'music-playing' : ''}}" bindtap="onToggleMusic">
+    <view class="music-disc">
+      <view class="disc-ring"></view>
+      <text class="music-note">♪</text>
+    </view>
+  </view>
+
   <!-- 右侧悬浮按钮 -->
   <view class="float-btn" bindtap="onTapFloatBtn">
     <image class="play-icon" src="/images/icon-1.png" mode="aspectFit"></image>
