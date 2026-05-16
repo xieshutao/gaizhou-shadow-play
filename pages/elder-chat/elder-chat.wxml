@@ -120,11 +120,4 @@
     </view>
   </view>
 
-  <!-- ======== 底部导航 ======== -->
-  <view class="tabbar" wx:if="{{scenePhase === 'scene'}}">
-    <view class="tab-item" bindtap="onTabHome"><text class="tab-icon">⌂</text><text class="tab-label">首页</text></view>
-    <view class="tab-item tab-active"><text class="tab-icon">◈</text><text class="tab-label">互动馆</text></view>
-    <view class="tab-item"><text class="tab-icon">💬</text><text class="tab-label">作坊</text></view>
-  </view>
-
 </view>

@@ -28,9 +28,11 @@ page {
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
   z-index: 10;
   padding-top: calc(env(safe-area-inset-top) + 88rpx);
   padding-left: 40rpx;
+  padding-right: 40rpx;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
