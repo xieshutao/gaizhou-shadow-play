@@ -33,6 +33,10 @@
       <image class="nav-icon" src="/images/icon-3.png" mode="aspectFit"></image>
       <text class="nav-text">艺术特色</text>
     </view>
+    <view class="nav-item" bindtap="onTapNavElder">
+      <image class="nav-icon" src="/images/icon-1.png" mode="aspectFit"></image>
+      <text class="nav-text" style="color:#D4AF37;">→ 作坊</text>
+    </view>
   </view>
 
   <!-- 底部核心舞台区域 -->
