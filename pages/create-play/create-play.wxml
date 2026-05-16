@@ -1,0 +1,219 @@
+<!-- pages/create-play/create-play.wxml -->
+<!-- 盖州皮影 · AI 造戏 — 8故事×4人物×4场景×4特效 -->
+
+<view class="page-root">
+
+  <!-- 全屏背景 -->
+  <view class="bg-layer"></view>
+
+  <!-- ====== 输入阶段 ====== -->
+  <view class="input-phase" wx:if="{{phase === 'input'}}">
+
+    <!-- 标题 -->
+    <view class="cp-title-area anim-fade-in">
+      <text class="cp-title">AI 造 戏</text>
+      <text class="cp-subtitle">输入关键词 · 一键生成皮影戏组合</text>
+      <view class="gold-divider"></view>
+    </view>
+
+    <!-- 关键词输入 -->
+    <view class="input-area">
+      <input
+        class="keyword-input"
+        placeholder="输入灵感关键词…（如：女将、雪夜、忠义）"
+        placeholder-style="color:rgba(255,255,255,0.18)"
+        confirm-type="search"
+        value="{{inputText}}"
+        bindinput="onInput"
+        bindconfirm="onInputConfirm"
+      />
+      <view class="input-deco-l"></view>
+      <view class="input-deco-r"></view>
+    </view>
+
+    <!-- 自动匹配提示 -->
+    <view class="match-hint" wx:if="{{selStory}}">
+      <text class="hint-icon">✦</text>
+      <text>已匹配：{{selStory.name}} · {{selChar.name}} · {{selScene.name}} · {{selEffect.name}}</text>
+    </view>
+
+    <!-- 四行选择器 -->
+    <view class="picker-section">
+
+      <!-- 故事 -->
+      <view class="picker-row">
+        <view class="picker-label">
+          <text class="label-num">壹</text>
+          <text class="label-text">故 事</text>
+        </view>
+        <scroll-view class="picker-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="picker-items">
+            <view
+              class="picker-chip {{selStory && selStory.id === item.id ? 'chip-active' : ''}}"
+              wx:for="{{stories}}" wx:key="id"
+              data-id="{{item.id}}"
+              bindtap="onTapStory"
+            >
+              <text class="chip-era">{{item.era === '传统剧目' ? '传' : '新'}}</text>
+              <text class="chip-name">{{item.name}}</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
+      <!-- 人物 -->
+      <view class="picker-row">
+        <view class="picker-label">
+          <text class="label-num">贰</text>
+          <text class="label-text">人 物</text>
+        </view>
+        <scroll-view class="picker-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="picker-items">
+            <view
+              class="picker-chip {{selChar && selChar.id === item.id ? 'chip-active' : ''}}"
+              wx:for="{{characters}}" wx:key="id"
+              data-id="{{item.id}}"
+              bindtap="onTapChar"
+            >
+              <text class="chip-role">{{item.role}}</text>
+              <text class="chip-name">{{item.name}}</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
+      <!-- 场景 -->
+      <view class="picker-row">
+        <view class="picker-label">
+          <text class="label-num">叁</text>
+          <text class="label-text">场 景</text>
+        </view>
+        <scroll-view class="picker-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="picker-items">
+            <view
+              class="picker-chip {{selScene && selScene.id === item.id ? 'chip-active' : ''}}"
+              wx:for="{{scenes}}" wx:key="id"
+              data-id="{{item.id}}"
+              bindtap="onTapScene"
+            >
+              <text class="chip-name">{{item.name}}</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
+      <!-- 特效 -->
+      <view class="picker-row">
+        <view class="picker-label">
+          <text class="label-num">肆</text>
+          <text class="label-text">特 效</text>
+        </view>
+        <scroll-view class="picker-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="picker-items">
+            <view
+              class="picker-chip {{selEffect && selEffect.id === item.id ? 'chip-active' : ''}}"
+              wx:for="{{effects}}" wx:key="id"
+              data-id="{{item.id}}"
+              bindtap="onTapEffect"
+            >
+              <text class="chip-name">{{item.name}}</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
+    </view>
+
+    <!-- 生成按钮 -->
+    <view class="gen-btn-wrap">
+      <view class="gen-btn gold-btn" bindtap="onGenerate">
+        <text>✧ 一 键 生 成 ✧</text>
+      </view>
+      <text class="gen-hint" wx:if="{{!selStory}}">输入关键词后回车可自动匹配</text>
+    </view>
+
+  </view>
+
+  <!-- ====== 结果阶段 ====== -->
+  <view class="result-phase anim-fade-in" wx:if="{{phase === 'result'}}">
+
+    <!-- 顶部标题 -->
+    <view class="rp-title-area">
+      <text class="rp-title">✨ 生 成 结 果</text>
+      <text class="rp-subtitle">8故事 × 4人物 × 4场景 × 4特效 = 512种组合</text>
+    </view>
+
+    <!-- 四要素卡片 -->
+    <view class="result-cards">
+
+      <!-- 故事卡 -->
+      <view class="result-card story-card">
+        <view class="rc-header">
+          <text class="rc-num">壹</text>
+          <text class="rc-type">故事</text>
+          <text class="rc-era">{{resultStory.era}}</text>
+        </view>
+        <text class="rc-name">{{resultStory.name}}</text>
+        <text class="rc-desc">{{resultStory.summary}}</text>
+        <view class="rc-deco"></view>
+      </view>
+
+      <!-- 人物卡 -->
+      <view class="result-card char-card">
+        <view class="rc-header">
+          <text class="rc-num">贰</text>
+          <text class="rc-type">人物</text>
+          <text class="rc-role">{{resultChar.role}}</text>
+        </view>
+        <text class="rc-name">{{resultChar.name}}</text>
+        <text class="rc-desc">{{resultChar.summary}}</text>
+      </view>
+
+      <!-- 场景卡 -->
+      <view class="result-card scene-card">
+        <view class="rc-header">
+          <text class="rc-num">叁</text>
+          <text class="rc-type">场景</text>
+        </view>
+        <text class="rc-name">{{resultScene.name}}</text>
+        <text class="rc-desc">{{resultScene.summary}}</text>
+      </view>
+
+      <!-- 特效卡 -->
+      <view class="result-card effect-card">
+        <view class="rc-header">
+          <text class="rc-num">肆</text>
+          <text class="rc-type">特效</text>
+        </view>
+        <text class="rc-name">{{resultEffect.name}}</text>
+        <text class="rc-desc">{{resultEffect.summary}}</text>
+      </view>
+
+    </view>
+
+    <!-- 操作 -->
+    <view class="rp-actions">
+      <view class="reset-btn gold-btn" bindtap="onReset">
+        <text>↺ 重 新 来 过</text>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- ====== 底部导航 ====== -->
+  <view class="tabbar">
+    <view class="tab-item" bindtap="onTabHome">
+      <text class="tab-icon">⌂</text>
+      <text class="tab-label">首页</text>
+    </view>
+    <view class="tab-item tab-active">
+      <text class="tab-icon">◈</text>
+      <text class="tab-label">互动馆</text>
+    </view>
+    <view class="tab-item">
+      <text class="tab-icon">▣</text>
+      <text class="tab-label">造戏</text>
+    </view>
+  </view>
+
+</view>

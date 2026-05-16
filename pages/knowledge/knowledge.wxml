@@ -1,0 +1,142 @@
+<!-- pages/knowledge/knowledge.wxml -->
+<!-- 皮影百科 · 盖州皮影戏知识馆 -->
+
+<view class="page-root">
+
+  <!-- 滚动容器 -->
+  <scroll-view class="main-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+
+    <!-- 顶部标题 -->
+    <view class="header">
+      <view class="header-deco-l"></view>
+      <view class="header-text">
+        <text class="header-title">皮 影 百 科</text>
+        <text class="header-subtitle">盖州皮影 · 光影两百年</text>
+      </view>
+      <view class="header-deco-r"></view>
+    </view>
+
+    <!-- ===== 章节1：历史渊源 ===== -->
+    <view class="section anim-fade-in">
+      <view class="section-title">
+        <view class="st-deco"></view>
+        <text class="st-num">壹</text>
+        <text class="st-text">历 史 渊 源</text>
+        <view class="st-deco"></view>
+      </view>
+
+      <view class="gold-card section-card">
+        <text class="card-body">
+          盖州皮影戏起源于明末清初，距今已有两百余年历史。\n
+          清康熙年间，盖州西河口港商贾云集，南北客商汇聚，\n
+          各路民间艺人也随之而来，带来了各地的皮影技艺。\n\n
+          辽南皮影在长期发展中融合了河北滦州影戏、山东皮影等\n
+          流派的特点，形成了独具特色的"辽南影"。\n\n
+          2011年，盖州皮影戏被列入第三批国家级非物质文化遗产名录。
+        </text>
+      </view>
+    </view>
+
+    <!-- ===== 章节2：艺术特色 ===== -->
+    <view class="section anim-fade-in">
+      <view class="section-title">
+        <view class="st-deco"></view>
+        <text class="st-num">贰</text>
+        <text class="st-text">艺 术 特 色</text>
+        <view class="st-deco"></view>
+      </view>
+
+      <view class="feature-grid">
+        <view class="feature-item gold-card" wx:for="{{features}}" wx:key="id">
+          <text class="fi-icon">{{item.icon}}</text>
+          <text class="fi-title">{{item.title}}</text>
+          <text class="fi-desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 章节3：制作工艺 ===== -->
+    <view class="section anim-fade-in">
+      <view class="section-title">
+        <view class="st-deco"></view>
+        <text class="st-num">叁</text>
+        <text class="st-text">制 作 工 艺</text>
+        <view class="st-deco"></view>
+      </view>
+
+      <view class="craft-steps">
+        <view class="craft-step" wx:for="{{crafts}}" wx:key="id">
+          <view class="cs-num-wrap">
+            <text class="cs-num">{{index + 1}}</text>
+            <view class="cs-line" wx:if="{{index < crafts.length - 1}}"></view>
+          </view>
+          <view class="cs-content gold-card">
+            <text class="cs-title">{{item.title}}</text>
+            <text class="cs-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 章节4：经典剧目 ===== -->
+    <view class="section anim-fade-in">
+      <view class="section-title">
+        <view class="st-deco"></view>
+        <text class="st-num">肆</text>
+        <text class="st-text">经 典 剧 目</text>
+        <view class="st-deco"></view>
+      </view>
+
+      <view class="play-list">
+        <view class="play-item gold-card" wx:for="{{plays}}" wx:key="id">
+          <view class="pi-header">
+            <text class="pi-name">{{item.name}}</text>
+            <text class="pi-era">{{item.era}}</text>
+          </view>
+          <text class="pi-desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 章节5：传承现状 ===== -->
+    <view class="section anim-fade-in">
+      <view class="section-title">
+        <view class="st-deco"></view>
+        <text class="st-num">伍</text>
+        <text class="st-text">传 承 现 状</text>
+        <view class="st-deco"></view>
+      </view>
+
+      <view class="gold-card section-card">
+        <text class="card-body">
+          目前，盖州皮影戏有国家级代表性传承人1人，省级传承人数人。\n\n
+          盖州市皮影艺术团坚持常年演出，每年参与各类演出活动百余场。\n
+          同时，通过"非遗进校园"等活动，培养青少年对皮影戏的兴趣。\n\n
+          在数字化时代，盖州皮影戏也在探索新的传播方式——\n
+          让古老的光影艺术在新时代焕发新的生机。
+        </text>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view class="bottom-spacer"></view>
+
+  </scroll-view>
+
+  <!-- 底部导航 -->
+  <view class="tabbar">
+    <view class="tab-item" bindtap="onTabHome">
+      <text class="tab-icon">⌂</text>
+      <text class="tab-label">首页</text>
+    </view>
+    <view class="tab-item tab-active">
+      <text class="tab-icon">◈</text>
+      <text class="tab-label">互动馆</text>
+    </view>
+    <view class="tab-item">
+      <text class="tab-icon">▦</text>
+      <text class="tab-label">百科</text>
+    </view>
+  </view>
+
+</view>

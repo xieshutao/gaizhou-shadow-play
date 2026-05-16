@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/interactive/interactive",
+    "pages/elder-chat/elder-chat",
+    "pages/create-play/create-play",
+    "pages/knowledge/knowledge"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#000000",
+    "backgroundColorTop": "#0a0402",
+    "backgroundColorBottom": "#0a0402"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {}
+}

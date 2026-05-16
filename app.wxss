@@ -1,0 +1,124 @@
+/* app.wxss — 盖州皮影戏 · 全局样式 */
+
+/* ===== 设计令牌 ===== */
+page {
+  --gold: #D4AF37;
+  --gold-light: rgba(212, 175, 55, 0.6);
+  --gold-dim: rgba(212, 175, 55, 0.2);
+  --bg-deep: #0a0402;
+  --bg-card: rgba(28, 16, 6, 0.93);
+  --text-primary: rgba(255, 240, 210, 0.9);
+  --text-secondary: rgba(255, 255, 255, 0.45);
+  --font-serif: "SimSun", "宋体", "Noto Serif CJK SC", serif;
+
+  height: 100vh;
+  background: #000;
+  font-family: var(--font-serif);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+/* ===== 全局安全区 ===== */
+.safe-top {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+}
+.safe-bottom {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ===== 通用金色文字 ===== */
+.text-gold { color: var(--gold); }
+.text-dim  { color: var(--text-secondary); }
+
+/* ===== 通用金边卡片 ===== */
+.gold-card {
+  background: var(--bg-card);
+  border: 1rpx solid var(--gold-dim);
+  border-radius: 2rpx;
+  box-shadow:
+    0 0 0 2rpx rgba(28, 16, 6, 0.6),
+    0 0 0 3rpx var(--gold-dim),
+    0 8rpx 32rpx rgba(0, 0, 0, 0.6);
+}
+
+/* ===== 通用分隔线 ===== */
+.gold-divider {
+  width: 100%;
+  height: 1rpx;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--gold-light),
+    transparent
+  );
+}
+
+/* ===== 通用金色按钮 ===== */
+.gold-btn {
+  padding: 16rpx 48rpx;
+  border: 1rpx solid var(--gold);
+  border-radius: 8rpx;
+  background: linear-gradient(
+    180deg,
+    rgba(40, 28, 8, 0.9) 0%,
+    rgba(20, 14, 4, 0.95) 100%
+  );
+  color: var(--gold);
+  font-size: 28rpx;
+  letter-spacing: 4rpx;
+  font-family: var(--font-serif);
+  text-align: center;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.4), 0 0 12rpx var(--gold-dim);
+}
+
+.gold-btn:active {
+  opacity: 0.8;
+  transform: scale(0.97);
+}
+
+/* ===== 通用四角装饰（可复用） ===== */
+.corner-tl, .corner-tr, .corner-bl, .corner-br {
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+}
+.corner-tl {
+  top: 8rpx; left: 8rpx;
+  border-top: 2rpx solid var(--gold);
+  border-left: 2rpx solid var(--gold);
+}
+.corner-tr {
+  top: 8rpx; right: 8rpx;
+  border-top: 2rpx solid var(--gold);
+  border-right: 2rpx solid var(--gold);
+}
+.corner-bl {
+  bottom: 8rpx; left: 8rpx;
+  border-bottom: 2rpx solid var(--gold);
+  border-left: 2rpx solid var(--gold);
+}
+.corner-br {
+  bottom: 8rpx; right: 8rpx;
+  border-bottom: 2rpx solid var(--gold);
+  border-right: 2rpx solid var(--gold);
+}
+
+/* ===== 淡入动画 ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim-fade-in {
+  animation: fadeIn 0.6s ease-out both;
+}
+
+/* ===== 金色呼吸闪烁 ===== */
+@keyframes goldPulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+.anim-gold-pulse {
+  animation: goldPulse 2s ease-in-out infinite;
+}
