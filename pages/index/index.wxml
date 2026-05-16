@@ -52,20 +52,9 @@
     </view>
   </view>
 
-  <!-- 音乐播放器卡片 — 左下角 ~4/5高度 -->
-  <view class="music-card {{isMusicPlaying ? 'music-playing' : ''}}" bindtap="onToggleMusic">
-    <!-- 旋转唱片 -->
-    <view class="mc-disc">
-      <view class="mc-disc-inner">
-        <text class="mc-note">{{isMusicPlaying ? '♪' : '◼'}}</text>
-      </view>
-      <view class="mc-ring"></view>
-    </view>
-    <!-- 歌曲信息 -->
-    <view class="mc-info">
-      <text class="mc-title">盖州风影</text>
-      <text class="mc-sub">{{isMusicPlaying ? '正在播放' : '已暂停'}}</text>
-    </view>
+  <!-- 右上角音乐图标 -->
+  <view class="music-icon {{isMusicPlaying ? 'music-playing' : ''}}" bindtap="onToggleMusic">
+    <text class="mi-note">{{isMusicPlaying ? '♬' : '♪'}}</text>
   </view>
 
   <!-- 右侧悬浮按钮 -->
