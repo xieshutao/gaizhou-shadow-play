@@ -12,12 +12,10 @@
     </view>
     <view class="subtitle-row">
       <text class="subtitle-gold">非遗传承 · 光影匠心</text>
-      <view class="spacer-2"></view>
-      <!-- 音乐图标 — 与副标题同行，约1/3处 -->
+      <!-- 音乐图标 — 右对齐 -->
       <view class="music-icon {{isMusicPlaying ? 'music-playing' : ''}}" bindtap="onToggleMusic">
         <text class="mi-note">{{isMusicPlaying ? '♬' : '♪'}}</text>
       </view>
-      <view class="spacer-1"></view>
     </view>
   </view>
 

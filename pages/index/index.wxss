@@ -62,7 +62,7 @@ page {
   white-space: nowrap;
 }
 
-/* 副标题行：文字 + 弹性空间 + 图标 */
+/* 副标题行：文字 + 图标（右对齐） */
 .subtitle-row {
   display: flex;
   flex-direction: row;
@@ -70,9 +70,6 @@ page {
   width: 100%;
   margin-top: 6rpx;
 }
-
-.spacer-2 { flex: 2; }
-.spacer-1 { flex: 1; }
 
 /* ── 左侧导航菜单 z-index:10 ── */
 .left-nav {
@@ -271,9 +268,11 @@ page {
   line-height: 1.6;
 }
 
-/* ── 音乐图标（嵌入副标题行，非绝对定位）── */
+/* ── 音乐图标（副标题行内，右对齐）── */
 .music-icon {
   flex-shrink: 0;
+  margin-left: auto;
+  margin-top: 8rpx;
   width: 70rpx;
   height: 70rpx;
   display: flex;

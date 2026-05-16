@@ -1,291 +1,237 @@
 // pages/elder-chat/elder-chat.js
-// 盖州皮影作坊 · AI 人物对话 — 舞台级交互体验
-// 整合 ASR → LLM → TTS → Animation 全流程
+// 盖州皮影作坊 — 舞台级伪3D人物AI对话
+// ★ 用户原始版本（单文件自洽）
 
-const fsm = require('../../modules/ai-chat/stateMachine.js')
-const asr  = require('../../modules/ai-chat/asr.js')
-const pipeline = require('../../modules/ai-chat/pipeline.js')
-const sfx = require('../../utils/sfx.js')
-const animation = require('../../modules/ai-chat/animation.js')
+// ★ API接入点：替换这三个函数即可接入真实LLM/TTS
+//   _callLLM(userText, charId) → 返回 { text: "回复文本" }
+//   _callTTS(text) → 返回音频并播放，或返回时长(ms)
+//   当前为占位实现，仅驱动视觉效果
 
-
-// ========== 人物数据 ==========
-const CHARACTERS = {
-  master: {
-    id: 'master',
-    name: '林师傅',
-    title: '七十岁老艺人 · 从艺五十余载',
-    imageBase: '/image3/laor',
-    imageFallback: '/images/stage.png',
-    introText: '后生来了？我是林师傅。\n打十六岁起就跟着师傅学皮影，\n刻了一辈子驴皮，耍了一辈子影人。\n来来来，坐下，咱们聊聊。',
-    persona: '老艺人林师傅，七十多岁，东北口音。说话爱用俗语歇后语，叫年轻人"孩子""后生"。提到皮影就来劲，眼里有光。'
-  },
-  young: {
-    id: 'young',
-    name: '阿诚',
-    title: '年轻学徒 · 皮影技艺传承人',
-    imageBase: '/image3/nianq',
-    imageFallback: '/images/icon-2.png',
-    introText: '你好！我是阿诚，\n跟着师傅学皮影三年多了。\n从描样子到刻驴皮，\n每一天都有新东西。\n想了解皮影吗？问我！',
-    persona: '年轻皮影学徒阿诚，二十多岁，热情好学。喜欢用年轻人的方式讲传统手艺，偶尔引用师傅的话。'
-  },
-  teen: {
-    id: 'teen',
-    name: '小影',
-    title: '小徒弟 · 皮影小小传承人',
-    imageBase: '/image3/shaonian',
-    imageFallback: '/images/icon-3.png',
-    introText: '嗨！我叫小影，\n是皮影作坊最小的徒弟。\n师傅说我手巧，\n刻的小兔子活灵活现！\n你想看我刻皮影吗？',
-    persona: '皮影小徒弟小影，十二三岁，活泼可爱。对皮影充满好奇，说话天真烂漫，偶尔冒出大人话。'
-  }
+var CHARACTERS = {
+  master: { id: 'master', name: '老师傅', title: '盖州皮影老艺人', imgClosed: '/image3/laor1.png', imgOpen: '/image3/laor2.png' },
+  young:  { id: 'young',  name: '年轻学徒', title: '皮影技艺传承人',   imgClosed: '/image3/nianq1.png', imgOpen: '/image3/nianq1.png' },
+  teen:   { id: 'teen',   name: '小徒弟',   title: '皮影小小传承人',   imgClosed: '/image3/shaonian.png', imgOpen: '/image3/shaonian.png' }
 }
 
-// ========== 开场台词 ==========
-const INTRO_FULL = '盖州皮影戏，辽南大地上传唱了两百年的光影传奇。\n\n一口道尽千古事，双手对舞百万兵。\n\n这里有三个人物等你来聊——\n老艺人林师傅、年轻学徒阿诚、小徒弟小影。\n\n轻触人物，开始对话吧。'
+// ★ 占位 LLM —— 替换为真实 API 调用
+function _callLLM(userText, charId) {
+  // TODO: 接入真实 LLM API，返回 { text: "..." }
+  var demoTexts = {
+    master: '一口道尽千古事，双手对舞百万兵。孩子，皮影戏的魂儿，在光影之间。',
+    young: '我跟师傅学了五年，越学越觉得皮影这手艺深得很。',
+    teen: '爷爷说等我刻出第一个皮影人，就带我去庙会表演。'
+  }
+  return { text: demoTexts[charId] || '你好，我是皮影作坊的一员。' }
+}
+
+// ★ 占位 TTS —— 替换为真实语音合成
+function _callTTS(text, onDone) {
+  // TODO: 接入真实 TTS API 播放音频，播放结束后调用 onDone()
+  var duration = Math.max(1500, (text || '').length * 220)
+  setTimeout(onDone, duration)
+}
+
+// ============ 引擎 ============
+var _busy = false, _mouthTimer = null, _breathTimer = null
+var _typewriterTimer = null, _recorder = null, _recordTimer = null
+var _activeChar = null, _recorderAvailable = true
+
+function _mockReplyQuick(charId) {
+  return _callLLM('', charId).text
+}
+
+// 嘴型
+function _startMouth(page) {
+  _stopMouth(page)
+  if (!_activeChar || _activeChar.imgOpen === _activeChar.imgClosed) {
+    // 单图角色：缩放脉冲
+    page.setData({ charPulse: true })
+    return
+  }
+  page.setData({ charImg: _activeChar.imgOpen })
+  var open = false
+  _mouthTimer = setInterval(function () {
+    open = !open
+    page.setData({ charImg: open ? _activeChar.imgOpen : _activeChar.imgClosed })
+  }, 140)
+}
+
+function _stopMouth(page) {
+  if (_mouthTimer) { clearInterval(_mouthTimer); _mouthTimer = null }
+  if (_activeChar) page.setData({ charImg: _activeChar.imgClosed, charPulse: false })
+}
+
+// 打字机字幕
+function _typewriter(page, text, onDone) {
+  if (_typewriterTimer) clearInterval(_typewriterTimer)
+  var i = 0
+  page.setData({ subtitle: '' })
+  _typewriterTimer = setInterval(function () {
+    if (i < text.length) {
+      page.setData({ subtitle: text.slice(0, i + 1) })
+      i++
+    } else {
+      clearInterval(_typewriterTimer); _typewriterTimer = null
+      if (onDone) onDone()
+    }
+  }, 80)
+}
+
+// 角色呼吸
+function _startBreath(page) {
+  _stopBreath(page)
+  var up = false
+  _breathTimer = setInterval(function () {
+    up = !up
+    page.setData({ breathUp: up })
+  }, 2500)
+}
+
+function _stopBreath(page) {
+  if (_breathTimer) { clearInterval(_breathTimer); _breathTimer = null }
+  page.setData({ breathUp: false })
+}
+
+// 录音
+function _initRecorder(page) {
+  if (_recorder) return _recorder
+  try {
+    _recorder = wx.getRecorderManager()
+    _recorder.onStart(function () { _recordTimer = setTimeout(function () { try { _recorder.stop() } catch (e) {} }, 60000) })
+    _recorder.onStop(function (res) {
+      clearTimeout(_recordTimer)
+      if (res.duration < 500) { page.setData({ isRecording: false, micRipple: false }); return }
+      page.setData({ isRecording: false, micRipple: false })
+      var q = '你好' // 真实 ASR 结果放这里
+      page.setData({ userSubtitle: q })
+      _doReply(q, page)
+    })
+    _recorder.onError(function () { clearTimeout(_recordTimer); _recorderAvailable = false; page.setData({ isRecording: false, micRipple: false, recorderError: true }) })
+    _recorderAvailable = true
+  } catch (e) { _recorderAvailable = false; _recorder = null }
+  return _recorder
+}
+
+function _doReply(userText, page) {
+  if (_busy) return; _busy = true
+  _stopBreath(page)
+  page.setData({ isProcessing: true })
+  setTimeout(function () {
+    var result = _callLLM(userText || '', _activeChar.id)
+    var reply = result.text
+    page.setData({ isProcessing: false, isSpeaking: true })
+    _startMouth(page)
+    _typewriter(page, reply, function () {
+      // 字幕打完，等 TTS 播完
+      _callTTS(reply, function () {
+        _stopMouth(page)
+        page.setData({ isSpeaking: false, subtitle: '', userSubtitle: '' })
+        _startBreath(page)
+        _busy = false
+      })
+    })
+  }, 600 + Math.random() * 1000)
+}
 
 Page({
   data: {
-    // 场景阶段
-    scenePhase: 'intro',     // 'intro' | 'scene' | 'character'
-    introVisible: true,
-    introText: '',
-    introDone: false,
-
-    // 当前人物
-    currentChar: null,       // CHARACTERS 中的 key
-    charName: '',
-    charTitle: '',
-    charImg: '/image3/laor1.png',
-
-    // 高亮人物
+    scenePhase: 'intro', introText: '', introVisible: false,
     highlightedChar: null,
-
-    // 呼吸动画
-    breathUp: false,
-    charPulse: false,
-
-    // 对话状态（由 fsm 同步）
-    isSpeaking: false,
-    isProcessing: false,
-    isRecording: false,
-    subtitle: '',
-    userSubtitle: '',
-    recorderError: false,
+    activeChar: null, charName: '', charTitle: '', charImg: '',
+    charPulse: false, breathUp: false,
+    isRecording: false, isSpeaking: false, isProcessing: false,
     micRipple: false,
-
-    // 输入
-    inputText: '',
-
-    // 粒子
-    particles: [],
-
-    // 注意：stateMachine 相关状态由 fsm.bindPage 自动同步
-    // fsmState, dialogueHistory 等
+    subtitle: '', userSubtitle: '', recorderError: false, inputText: '',
+    particles: []
   },
 
-  // ========== 生命周期 ==========
   onLoad() {
-    // 生成漂浮粒子
-    this._genParticles()
-
-    // 绑定状态机
-    fsm.bindPage(this)
-
-    // 监听状态变化
-    fsm.onChange((state, data) => {
-      if (state === 'SPEAKING') {
-        this.setData({ subtitle: data.replyText || '', isSpeaking: true, charPulse: true })
-      } else if (state === 'PROCESSING') {
-        this.setData({ isProcessing: true, subtitle: '', userSubtitle: '' })
-      } else if (state === 'IDLE') {
-        this.setData({
-          isSpeaking: false, isProcessing: false, charPulse: false,
-          subtitle: '',
-        })
-      }
-    })
-
-    // 启动开场打字动画
-    this._typeIntro()
-
-    // 呼吸动画循环
-    this._startBreath()
-  },
-
-  onHide() {
-    this._stopBreath()
-  },
-
-  onUnload() {
-    this._stopBreath()
-    fsm.bindPage(null)
-  },
-
-  // ========== 开场打字 ==========
-  _typeIntro() {
-    let idx = 0
-    const text = INTRO_FULL
-    const timer = setInterval(() => {
-      if (idx < text.length) {
-        this.setData({ introText: text.slice(0, idx + 1) })
-        idx++
-      } else {
-        clearInterval(timer)
-        this.setData({ introDone: true })
-        // 2 秒后进入场景页
-        setTimeout(() => {
-          this.setData({
-            scenePhase: 'scene',
-            introVisible: false,
-          })
-        }, 1500)
-      }
-    }, 45)
-  },
-
-  // ========== 粒子 ==========
-  _genParticles() {
-    const particles = []
-    for (let i = 0; i < 20; i++) {
-      particles.push({
+    _busy = false; _activeChar = null; _recorderAvailable = true
+    _initRecorder(this)
+    this._startIntro()
+    // 生成粒子数据
+    var p = []
+    for (var i = 0; i < 15; i++) {
+      p.push({
         id: i,
-        left: Math.random() * 100,
-        delay: Math.random() * 8,
-        duration: 4 + Math.random() * 6,
-        size: 3 + Math.random() * 6,
+        left: Math.floor(Math.random() * 90) + 5,
+        delay: (Math.random() * 6).toFixed(1),
+        duration: (4 + Math.random() * 6).toFixed(1),
+        size: (4 + Math.random() * 6).toFixed(0)
       })
     }
-    this.setData({ particles })
+    this.setData({ particles: p })
   },
 
-  // ========== 呼吸动画 ==========
-  _breathTimer: null,
-  _startBreath() {
-    this._stopBreath()
-    this._breathTimer = setInterval(() => {
-      if (this.data.isSpeaking || this.data.isProcessing) return
-      this.setData({ breathUp: true })
-      setTimeout(() => {
-        if (!this.data.isSpeaking && !this.data.isProcessing) {
-          this.setData({ breathUp: false })
-        }
-      }, 2500)
-    }, 5000)
-  },
-  _stopBreath() {
-    if (this._breathTimer) { clearInterval(this._breathTimer); this._breathTimer = null }
+  onUnload() { _stopMouth(this); _stopBreath(this); if (_typewriterTimer) clearInterval(_typewriterTimer); if (_recorder) try { _recorder.stop() } catch (e) {}; _busy = false },
+
+  _startIntro() {
+    var page = this
+    var text = '盖州，一座百年皮影作坊。老师傅带着徒弟们，正在为下一场庙会演出做准备……'
+    page.setData({ scenePhase: 'intro', introText: '', introVisible: true })
+    var i = 0, timer = setInterval(function () {
+      if (i < text.length) { page.setData({ introText: text.slice(0, i + 1) }); i++ }
+      else { clearInterval(timer); setTimeout(function () { page.setData({ introVisible: false }); setTimeout(function () { page.setData({ scenePhase: 'scene' }) }, 400) }, 2000) }
+    }, 60)
   },
 
-  // ========== 场景触摸 ==========
-  _touchTimer: null,
-  onSceneTouchStart(e) {
-    this._touchTimer = setTimeout(() => {
-      // 长按 2 秒后随机高亮
-      const chars = ['master', 'young', 'teen']
-      const pick = chars[Math.floor(Math.random() * 3)]
-      this.setData({ highlightedChar: pick })
-      setTimeout(() => {
-        this.setData({ highlightedChar: null })
-      }, 1500)
-    }, 2000)
-  },
-  onSceneTouchMove() {
-    if (this._touchTimer) { clearTimeout(this._touchTimer); this._touchTimer = null }
-  },
-  onSceneTouchEnd() {
-    if (this._touchTimer) { clearTimeout(this._touchTimer); this._touchTimer = null }
+  onSceneTouchStart(e) { if (!_busy && this.data.scenePhase === 'scene') this._checkTouch(e) },
+  onSceneTouchMove(e)  { if (!_busy && this.data.scenePhase === 'scene') this._checkTouch(e) },
+  onSceneTouchEnd()    { if (this.data.scenePhase === 'scene' && this.data.highlightedChar) this.setData({ highlightedChar: null }) },
+
+  _checkTouch(e) {
+    var t = e.touches[0]; if (!t) return
+    var sys = wx.getSystemInfoSync(), w = sys.windowWidth, h = sys.windowHeight, x = t.x, y = t.y, hit = null
+    if      (x > w * 0.15 && x < w * 0.50 && y > h * 0.20 && y < h * 0.60) hit = 'master'
+    else if (x > w * 0.50 && x < w * 0.88 && y > h * 0.15 && y < h * 0.55) hit = 'young'
+    else if (x > w * 0.12 && x < w * 0.48 && y > h * 0.48 && y < h * 0.82) hit = 'teen'
+    if (hit !== this.data.highlightedChar) this.setData({ highlightedChar: hit })
   },
 
-  // ========== 人物点击 ==========
   onCharTapMaster() { this._selectChar('master') },
   onCharTapYoung()  { this._selectChar('young') },
   onCharTapTeen()   { this._selectChar('teen') },
 
-  _selectChar(key) {
-    const char = CHARACTERS[key]
-    if (!char) return
-
+  _selectChar(charId) {
+    if (_busy) return; var cfg = CHARACTERS[charId]; if (!cfg) return
+    _activeChar = cfg
     this.setData({
-      scenePhase: 'character',
-      currentChar: key,
-      charName: char.name,
-      charTitle: char.title,
-      charImg: char.imageBase + '1.png',
-      subtitle: '',
-      userSubtitle: '',
-      isSpeaking: false,
-      isProcessing: false,
+      scenePhase: 'character', activeChar: charId, charName: cfg.name, charTitle: cfg.title,
+      charImg: cfg.imgClosed, charPulse: false, breathUp: false,
+      subtitle: '', userSubtitle: '', isSpeaking: false, isRecording: false, recorderError: false
     })
-
-    // 震动反馈
+    _startBreath(this)
     try { wx.vibrateShort({ type: 'light' }) } catch (e) {}
-
-    // 开场招呼
-    const greeting = char.introText.split('\n')[0]
-    setTimeout(() => {
-      fsm.startSpeak(greeting, 'calm')
-    }, 600)
-
-    // 切换到 IDLE 让用户输入
-    setTimeout(() => {
-      if (fsm.is('SPEAKING')) {
-        fsm.finishSpeak()
-      }
-    }, 3500)
   },
 
-  // ========== 返回场景 ==========
   onBackToScene() {
-    fsm.transition('IDLE')
-    animation.stopSpeak()
+    _busy = false
+    _stopMouth(this); _stopBreath(this)
+    if (_typewriterTimer) { clearInterval(_typewriterTimer); _typewriterTimer = null }
+    _activeChar = null
     this.setData({
-      scenePhase: 'scene',
-      currentChar: null,
-      subtitle: '',
-      userSubtitle: '',
-      isSpeaking: false,
-      isProcessing: false,
-      isRecording: false,
-      charPulse: false,
+      scenePhase: 'scene', activeChar: null, charName: '', charTitle: '', charImg: '',
+      subtitle: '', userSubtitle: '', charPulse: false, breathUp: false,
+      isSpeaking: false, isRecording: false, isProcessing: false, recorderError: false
     })
   },
 
-  // ========== 语音输入 ==========
   onPressTalk() {
-    sfx.play('tap')
-    if (fsm.is('PROCESSING') || fsm.is('SPEAKING')) return
-
-    this.setData({ isRecording: true, micRipple: true, recorderError: false })
-    asr.startRecord()
+    if (_busy || !_activeChar || this.data.isSpeaking || this.data.isProcessing) return
+    var r = _initRecorder(this)
+    if (!r || !_recorderAvailable) { this.setData({ recorderError: true }); return }
+    this.setData({ isRecording: true, micRipple: true, userSubtitle: '', recorderError: false })
+    try { r.start({ duration: 60000, sampleRate: 16000, numberOfChannels: 1, encodeBitRate: 48000, format: 'mp3' }) } catch (e) { this.setData({ isRecording: false, micRipple: false, recorderError: true }) }
   },
 
-  onReleaseTalk() {
-    if (!this.data.isRecording) return
+  onReleaseTalk() { if (!this.data.isRecording) return; try { _recorder.stop() } catch (e) { this.setData({ isRecording: false, micRipple: false }) } },
 
-    this.setData({ isRecording: false, micRipple: false })
-
-    // ASR 自动调 pipeline，不需要手动处理
-    // recorderManager.onStop 中会调用 pipeline.run(userText)
-  },
-
-  // ========== 文字输入 ==========
   onInputConfirm(e) {
-    const text = (e.detail.value || '').trim()
-    if (!text) return
-
-    this.setData({
-      inputText: '',
-      userSubtitle: text,
-    })
-
-    pipeline.runFromText(text)
+    var text = (e.detail.value || '').trim(); if (!text || _busy || !_activeChar) return
+    this.setData({ inputText: '', userSubtitle: text })
+    _doReply(text, this)
   },
 
-  // ========== tabBar 同步 ==========
-  onShow() {
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({ selected: 2 })
-    }
-    this._startBreath()
-  }
+  onTabHome() { wx.redirectTo({ url: '/pages/index/index' }) },
+  onTabInteractive() { wx.redirectTo({ url: '/pages/interactive/interactive' }) }
 })
