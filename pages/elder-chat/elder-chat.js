@@ -8,6 +8,8 @@ const pipeline = require('../../modules/ai-chat/pipeline.js')
 const memoryModule = require('../../modules/ai-chat/memory.js')
 const emotion = require('../../modules/ai-chat/emotion.js')
 const animation = require('../../modules/ai-chat/animation.js')
+const sfx = require('../../utils/sfx.js')
+
 
 // ========== 人物数据 ==========
 const CHARACTERS = {
@@ -260,6 +262,7 @@ Page({
 
   // ========== 语音输入 ==========
   onPressTalk() {
+    sfx.play('tap')
     if (fsm.is('PROCESSING') || fsm.is('SPEAKING')) return
 
     this.setData({ isRecording: true, micRipple: true, recorderError: false })

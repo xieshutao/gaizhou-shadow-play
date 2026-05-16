@@ -1,4 +1,6 @@
 // pages/mine/mine.js
+const sfx = require('../../utils/sfx.js')
+
 // 我的 — 个人信息/收藏/设置
 
 const app = getApp()
@@ -70,6 +72,7 @@ Page({
 
   // 菜单点击
   onTapMenu(e) {
+    sfx.play('tap')
     const id = e.currentTarget.dataset.id
     switch (id) {
       case 'fav':

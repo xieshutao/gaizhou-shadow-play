@@ -1,12 +1,7 @@
 // index.js
-const BGM_PATH = '/audio/盖州风影.mp3'
+const sfx = require('../../utils/sfx.js')
 
-// 音效路径
-const SFX = {
-  tap: '/audio/sfx/tap.wav',
-  nav: '/audio/sfx/nav.wav',
-  card: '/audio/sfx/card.wav',
-}
+const BGM_PATH = '/audio/盖州风影.mp3'
 
 Page({
   data: {
@@ -14,7 +9,6 @@ Page({
   },
 
   bgmAudio: null,
-  sfxPool: [],  // 音效池复用
 
   onLoad() {
     this.bgmAudio = wx.createInnerAudioContext()
@@ -31,19 +25,8 @@ Page({
     })
   },
 
-  // 播放短音效
-  _playSfx(sfxPath) {
-    const audio = wx.createInnerAudioContext()
-    audio.src = sfxPath
-    audio.obeyMuteSwitch = false
-    audio.play()
-    // 播完自动销毁
-    audio.onEnded(() => audio.destroy())
-    audio.onError(() => audio.destroy())
-  },
-
   onToggleMusic() {
-    this._playSfx(SFX.tap)
+    sfx.play('tap')
     if (this.data.isMusicPlaying) {
       this.bgmAudio.pause()
       this.setData({ isMusicPlaying: false })
@@ -54,20 +37,20 @@ Page({
   },
 
   onTapNav1() {
-    this._playSfx(SFX.nav)
+    sfx.play('nav')
     wx.navigateTo({ url: '/pages/knowledge/knowledge' })
   },
   onTapNav2() {
-    this._playSfx(SFX.nav)
+    sfx.play('nav')
     wx.navigateTo({ url: '/pages/knowledge/knowledge' })
   },
   onTapNav3() {
-    this._playSfx(SFX.nav)
+    sfx.play('nav')
     wx.navigateTo({ url: '/pages/knowledge/knowledge' })
   },
 
   onTapFloatBtn() {
-    this._playSfx(SFX.tap)
+    sfx.play('tap')
     wx.switchTab({ url: '/pages/interactive/interactive' })
   },
 

@@ -1,4 +1,6 @@
 // pages/create-play/create-play.js
+const sfx = require('../../utils/sfx.js')
+
 // 盖州皮影 · AI造戏 — 8故事×4人物×4场景×4特效 = 128种组合
 // 关键词匹配 → 一键生成皮影戏组合
 

@@ -1,6 +1,8 @@
 // custom-tab-bar/index.js
 // 国风底部导航栏 — ICHStudy 图标
 
+const sfx = require('../utils/sfx.js')
+
 Component({
   data: {
     selected: 0,
@@ -39,6 +41,8 @@ Component({
       const url = item.pagePath
 
       if (this.data.selected === index) return
+
+      sfx.play('tap')
 
       wx.switchTab({
         url,
