@@ -10,7 +10,15 @@
     <view class="subtitle-wrap">
       <text class="subtitle-en">GAIZHOU SHADOW PLAY</text>
     </view>
-    <text class="subtitle-gold">非遗传承 · 光影匠心</text>
+    <view class="subtitle-row">
+      <text class="subtitle-gold">非遗传承 · 光影匠心</text>
+      <view class="spacer-2"></view>
+      <!-- 音乐图标 — 与副标题同行，约1/3处 -->
+      <view class="music-icon {{isMusicPlaying ? 'music-playing' : ''}}" bindtap="onToggleMusic">
+        <text class="mi-note">{{isMusicPlaying ? '♬' : '♪'}}</text>
+      </view>
+      <view class="spacer-1"></view>
+    </view>
   </view>
 
   <!-- 左侧导航菜单 -->
@@ -50,11 +58,6 @@
       <text class="card-subtitle">传 承 千 年</text>
       <text class="card-quote">一口道尽千古事　双手对舞百万兵</text>
     </view>
-  </view>
-
-  <!-- 右上角音乐图标 -->
-  <view class="music-icon {{isMusicPlaying ? 'music-playing' : ''}}" bindtap="onToggleMusic">
-    <text class="mi-note">{{isMusicPlaying ? '♬' : '♪'}}</text>
   </view>
 
   <!-- 右侧悬浮按钮 -->

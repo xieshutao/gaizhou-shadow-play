@@ -59,7 +59,20 @@ page {
   font-size: 20rpx;
   color: #D4AF37;
   letter-spacing: 3rpx;
+  white-space: nowrap;
 }
+
+/* 副标题行：文字 + 弹性空间 + 图标 */
+.subtitle-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-top: 6rpx;
+}
+
+.spacer-2 { flex: 2; }
+.spacer-1 { flex: 1; }
 
 /* ── 左侧导航菜单 z-index:10 ── */
 .left-nav {
@@ -258,12 +271,9 @@ page {
   line-height: 1.6;
 }
 
-/* ── 右上角音乐图标 z-index:25 ── */
+/* ── 音乐图标（嵌入副标题行，非绝对定位）── */
 .music-icon {
-  position: absolute;
-  top: calc(env(safe-area-inset-top) + 258rpx);
-  right: 120rpx;
-  z-index: 25;
+  flex-shrink: 0;
   width: 70rpx;
   height: 70rpx;
   display: flex;

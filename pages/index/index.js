@@ -8,14 +8,11 @@ Page({
   },
 
   onLoad() {
-    // 使用 BackgroundAudioManager — 微信系统级播放器
-    const bgAudio = wx.getBackgroundAudioManager()
-    bgAudio.title = '盖州风影'
-    bgAudio.epname = '盖州皮影戏'
-    bgAudio.singer = '非遗传承'
-    bgAudio.coverImgUrl = '/images/tabbar/home.png'
+    // 使用 InnerAudioContext — 简单可靠
+    const bgAudio = wx.createInnerAudioContext()
     bgAudio.src = BGM_PATH
     bgAudio.loop = true
+    bgAudio.obeyMuteSwitch = false  // 忽略静音开关
 
     bgAudio.onPlay(() => {
       this.setData({ isMusicPlaying: true })
@@ -30,13 +27,10 @@ Page({
       console.log('BGM失败:', err)
     })
 
-    // 获取当前状态
-    if (!bgAudio.paused) {
-      this.setData({ isMusicPlaying: true })
-    }
-
-    // ★ 自动播放
-    bgAudio.play()
+    // 自动播放（需要等音频加载）
+    bgAudio.onCanplay(() => {
+      bgAudio.play()
+    })
 
     this.bgAudio = bgAudio
   },
@@ -46,8 +40,6 @@ Page({
     if (this.data.isMusicPlaying) {
       this.bgAudio.pause()
     } else {
-      this.bgAudio.src = BGM_PATH  // 确保src还在
-      this.bgAudio.title = '盖州风影'
       this.bgAudio.play()
     }
   },
@@ -73,6 +65,12 @@ Page({
   onShow() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: 0 })
+    }
+  },
+
+  onUnload() {
+    if (this.bgAudio) {
+      this.bgAudio.destroy()
     }
   }
 })
