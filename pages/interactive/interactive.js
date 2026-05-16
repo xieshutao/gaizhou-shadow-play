@@ -8,16 +8,22 @@ Page({
     pressing3: false
   },
 
-  onPress1() { this.setData({ pressing1: true }) },
+  onPress1() {
     sfx.play('tap')
+    this.setData({ pressing1: true })
+  },
   onRelease1() { this.setData({ pressing1: false }) },
 
-  onPress2() { this.setData({ pressing2: true }) },
+  onPress2() {
     sfx.play('tap')
+    this.setData({ pressing2: true })
+  },
   onRelease2() { this.setData({ pressing2: false }) },
 
-  onPress3() { this.setData({ pressing3: true }) },
+  onPress3() {
     sfx.play('tap')
+    this.setData({ pressing3: true })
+  },
   onRelease3() { this.setData({ pressing3: false }) },
 
   onTapBtn1() {
