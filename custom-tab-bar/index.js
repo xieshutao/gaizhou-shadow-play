@@ -1,7 +1,5 @@
 // custom-tab-bar/index.js
-// 国风底部导航栏 — ICHStudy 图标
-
-const sfx = require('../utils/sfx.js')
+// 国风底部导航栏
 
 Component({
   data: {
@@ -42,14 +40,13 @@ Component({
 
       if (this.data.selected === index) return
 
-      sfx.play('tap')
-
       wx.switchTab({
         url,
         success: () => {
           this.setData({ selected: index })
         },
         fail: (err) => {
+          wx.showToast({ title: '切换失败', icon: 'none' })
           console.error('switchTab fail:', err)
         }
       })

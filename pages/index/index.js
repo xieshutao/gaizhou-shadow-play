@@ -57,15 +57,6 @@ Page({
     wx.navigateTo({ url: '/pages/knowledge/knowledge' })
   },
 
-  // ★ 测试：直接跳老易传音
-  onTapNavElder() {
-    wx.switchTab({
-      url: '/pages/elder-chat/elder-chat',
-      success: () => { wx.showToast({ title: '跳转成功' }) },
-      fail: (err) => { wx.showToast({ title: '失败:' + JSON.stringify(err), icon: 'none' }) }
-    })
-  },
-
   onTapFloatBtn() {
     sfx.play('tap')
     wx.switchTab({ url: '/pages/interactive/interactive' })
