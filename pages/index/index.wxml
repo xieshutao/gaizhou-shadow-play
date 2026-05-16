@@ -40,35 +40,22 @@
     <image class="stage-img" src="/images/stage.png" mode="widthFix"></image>
   </view>
 
-  <!-- 敦煌卷轴卡片 -->
-  <view class="scroll-card">
-    <!-- 上卷轴 -->
-    <view class="sc-roll sc-roll-top">
-      <view class="sc-roll-cap sc-cap-l"></view>
-      <view class="sc-roll-body"></view>
-      <view class="sc-roll-cap sc-cap-r"></view>
-    </view>
-    <!-- 画心 -->
-    <view class="sc-body">
-      <view class="sc-inner">
-        <text class="sc-title">光 影 之 间</text>
-        <view class="sc-divider">
-          <view class="sc-dline"></view>
-          <text class="sc-diamond">◇</text>
-          <view class="sc-dline"></view>
+  <!-- 卡片（ColorUI cu-card 结构 + 国风配色） -->
+  <view class="cu-card">
+    <view class="cu-item shadow-blur">
+      <view class="card-body">
+        <text class="card-title">光 影 之 间</text>
+        <view class="card-divider">
+          <view class="cd-line"></view>
+          <text class="cd-diamond">◆</text>
+          <view class="cd-line"></view>
         </view>
-        <text class="sc-subtitle">传 承 千 年</text>
-        <view class="sc-quote-wrap">
-          <text class="sc-quote">一口道尽千古事</text>
-          <text class="sc-quote">双手对舞百万兵</text>
+        <text class="card-sub">传 承 千 年</text>
+        <view class="card-quote">
+          <text>一口道尽千古事</text>
+          <text>双手对舞百万兵</text>
         </view>
       </view>
-    </view>
-    <!-- 下卷轴 -->
-    <view class="sc-roll sc-roll-bot">
-      <view class="sc-roll-cap sc-cap-l"></view>
-      <view class="sc-roll-body"></view>
-      <view class="sc-roll-cap sc-cap-r"></view>
     </view>
   </view>
 
