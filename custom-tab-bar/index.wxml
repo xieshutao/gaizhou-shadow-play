@@ -1,5 +1,5 @@
 <!-- custom-tab-bar/index.wxml -->
-<!-- 国风印章风格底部导航栏 -->
+<!-- 国风底部导航栏 — 使用 ICHStudy 图标 -->
 
 <view class="tabbar">
   <view
@@ -9,11 +9,11 @@
     data-index="{{index}}"
     bindtap="switchTab"
   >
-    <!-- 印章图标 -->
-    <view class="seal {{selected === index ? 'seal-active' : ''}}">
-      <text class="seal-char">{{item.iconChar}}</text>
-    </view>
-
+    <!-- 图标 -->
+    <image 
+      class="tab-icon" 
+      src="{{selected === index ? item.selectedIconPath : item.iconPath}}"
+    />
     <!-- 标签 -->
     <text class="tab-label {{selected === index ? 'label-active' : ''}}">{{item.text}}</text>
   </view>

@@ -1,5 +1,5 @@
 // custom-tab-bar/index.js
-// 国风印章风格 — 底部导航栏
+// 国风底部导航栏 — ICHStudy 图标
 
 Component({
   data: {
@@ -8,22 +8,26 @@ Component({
       {
         pagePath: '/pages/index/index',
         text: '首页',
-        iconChar: '幕'
+        iconPath: '/images/tabbar/home.png',
+        selectedIconPath: '/images/tabbar/home-active.png'
       },
       {
         pagePath: '/pages/interactive/interactive',
         text: '互动馆',
-        iconChar: '戏'
+        iconPath: '/images/tabbar/learn.png',
+        selectedIconPath: '/images/tabbar/learn-active.png'
       },
       {
         pagePath: '/pages/elder-chat/elder-chat',
         text: '作坊',
-        iconChar: '刻'
+        iconPath: '/images/tabbar/study.png',
+        selectedIconPath: '/images/tabbar/study-active.png'
       },
       {
         pagePath: '/pages/mine/mine',
         text: '我的',
-        iconChar: '我'
+        iconPath: '/images/tabbar/mine.png',
+        selectedIconPath: '/images/tabbar/mine-active.png'
       }
     ]
   },
