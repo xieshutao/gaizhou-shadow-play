@@ -261,7 +261,7 @@ page {
 /* ── 右上角音乐按钮 z-index:25 ── */
 .music-btn {
   position: absolute;
-  top: calc(env(safe-area-inset-top) + 30rpx);
+  top: calc(env(safe-area-inset-top) + 88rpx);
   right: 28rpx;
   z-index: 25;
   width: 72rpx;

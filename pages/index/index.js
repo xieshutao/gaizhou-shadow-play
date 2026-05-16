@@ -1,35 +1,49 @@
 // index.js
-const BGM_PATH = '/audio/盖州风影.mp3'  // 盖州皮影戏背景音乐
+const BGM_PATH = '/audio/盖州风影.mp3'
+
+// 音效路径
+const SFX = {
+  tap: '/audio/sfx/tap.wav',
+  nav: '/audio/sfx/nav.wav',
+  card: '/audio/sfx/card.wav',
+}
 
 Page({
   data: {
     isMusicPlaying: false
   },
 
-  // 音频上下文
   bgmAudio: null,
+  sfxPool: [],  // 音效池复用
 
   onLoad() {
-    // 创建音频实例
     this.bgmAudio = wx.createInnerAudioContext()
     this.bgmAudio.src = BGM_PATH
     this.bgmAudio.loop = true
-    this.bgmAudio.obeyMuteSwitch = false  // 静音模式下也播放
-
-    // 自动播放
+    this.bgmAudio.obeyMuteSwitch = false
     this.bgmAudio.autoplay = true
     this.bgmAudio.play()
     this.setData({ isMusicPlaying: true })
 
-    // 播放失败处理
     this.bgmAudio.onError((err) => {
-      console.log('BGM播放失败:', err)
+      console.log('BGM失败:', err)
       this.setData({ isMusicPlaying: false })
     })
   },
 
-  // 点击切换音乐
+  // 播放短音效
+  _playSfx(sfxPath) {
+    const audio = wx.createInnerAudioContext()
+    audio.src = sfxPath
+    audio.obeyMuteSwitch = false
+    audio.play()
+    // 播完自动销毁
+    audio.onEnded(() => audio.destroy())
+    audio.onError(() => audio.destroy())
+  },
+
   onToggleMusic() {
+    this._playSfx(SFX.tap)
     if (this.data.isMusicPlaying) {
       this.bgmAudio.pause()
       this.setData({ isMusicPlaying: false })
@@ -39,33 +53,31 @@ Page({
     }
   },
 
-  // 左侧导航
   onTapNav1() {
+    this._playSfx(SFX.nav)
     wx.navigateTo({ url: '/pages/knowledge/knowledge' })
   },
   onTapNav2() {
+    this._playSfx(SFX.nav)
     wx.navigateTo({ url: '/pages/knowledge/knowledge' })
   },
   onTapNav3() {
+    this._playSfx(SFX.nav)
     wx.navigateTo({ url: '/pages/knowledge/knowledge' })
   },
 
-  // 右侧悬浮按钮
   onTapFloatBtn() {
+    this._playSfx(SFX.tap)
     wx.switchTab({ url: '/pages/interactive/interactive' })
   },
 
-  // 同步 tabBar 选中态
   onShow() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: 0 })
     }
   },
 
-  // 页面卸载时销毁音频
   onUnload() {
-    if (this.bgmAudio) {
-      this.bgmAudio.destroy()
-    }
+    if (this.bgmAudio) this.bgmAudio.destroy()
   }
 })
