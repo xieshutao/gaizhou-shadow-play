@@ -130,9 +130,9 @@ Page({
     var t = e.touches[0]; if (!t) return
     var sys = wx.getSystemInfoSync(), w = sys.windowWidth, h = sys.windowHeight
     var x = t.x, y = t.y, hit = null
-    if      (x > w * 0.15 && x < w * 0.50 && y > h * 0.20 && y < h * 0.60) hit = 'master'
-    else if (x > w * 0.50 && x < w * 0.88 && y > h * 0.15 && y < h * 0.55) hit = 'young'
-    else if (x > w * 0.12 && x < w * 0.48 && y > h * 0.48 && y < h * 0.82) hit = 'teen'
+    if      (y > h * 0.30 && y < h * 0.46) hit = 'master'
+    else if (y > h * 0.46 && y < h * 0.62) hit = 'young'
+    else if (y > h * 0.62 && y < h * 0.82) hit = 'teen'
     if (hit !== this.data.highlightedChar) this.setData({ highlightedChar: hit })
   },
 
