@@ -261,8 +261,9 @@ page {
 /* ── 右上角音乐图标 z-index:25 ── */
 .music-icon {
   position: absolute;
-  top: calc(env(safe-area-inset-top) + 80rpx);
-  right: 168rpx;  /* 在标题右边缘 */
+  top: 50%;
+  right: 20rpx;
+  transform: translateY(-50%);
   z-index: 25;
   width: 56rpx;
   height: 56rpx;
