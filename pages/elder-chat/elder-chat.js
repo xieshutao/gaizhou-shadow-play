@@ -5,10 +5,8 @@
 const fsm = require('../../modules/ai-chat/stateMachine.js')
 const asr  = require('../../modules/ai-chat/asr.js')
 const pipeline = require('../../modules/ai-chat/pipeline.js')
-const memoryModule = require('../../modules/ai-chat/memory.js')
-const emotion = require('../../modules/ai-chat/emotion.js')
-const animation = require('../../modules/ai-chat/animation.js')
 const sfx = require('../../utils/sfx.js')
+const animation = require('../../modules/ai-chat/animation.js')
 
 
 // ========== 人物数据 ==========
@@ -92,8 +90,6 @@ Page({
 
     // 绑定状态机
     fsm.bindPage(this)
-    // 绑定内存模块
-    memoryModule.bindPage(this)
 
     // 监听状态变化
     fsm.onChange((state, data) => {
@@ -116,11 +112,6 @@ Page({
     this._startBreath()
   },
 
-  onShow() {
-    // 切回前台，恢复呼吸
-    this._startBreath()
-  },
-
   onHide() {
     this._stopBreath()
   },
@@ -128,7 +119,6 @@ Page({
   onUnload() {
     this._stopBreath()
     fsm.bindPage(null)
-    memoryModule.bindPage(null)
   },
 
   // ========== 开场打字 ==========
