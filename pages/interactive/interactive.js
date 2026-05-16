@@ -28,7 +28,7 @@ Page({
 
   onTapBtn1() {
     sfx.play('tap')
-    wx.navigateTo({ url: '/pages/elder-chat/elder-chat' })
+    wx.switchTab({ url: '/pages/elder-chat/elder-chat' })
   },
 
   onTapBtn2() {
