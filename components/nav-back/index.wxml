@@ -1,0 +1,4 @@
+<!-- components/nav-back/index.wxml -->
+<view class="nav-back" bindtap="onBack">
+  <text class="back-arrow">←</text>
+</view>

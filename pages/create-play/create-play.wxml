@@ -3,6 +3,8 @@
 
 <view class="page-root">
 
+  <!-- 返回按钮 -->
+  <nav-back></nav-back>
   <!-- 全屏背景 -->
   <view class="bg-layer"></view>
 

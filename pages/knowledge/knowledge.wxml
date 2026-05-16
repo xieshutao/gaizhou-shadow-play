@@ -3,6 +3,8 @@
 
 <view class="page-root">
 
+  <!-- 返回按钮 -->
+  <nav-back></nav-back>
   <!-- 滚动容器 -->
   <scroll-view class="main-scroll" scroll-y enhanced show-scrollbar="{{false}}">
 

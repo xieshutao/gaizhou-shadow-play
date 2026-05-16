@@ -1,0 +1,29 @@
+/* components/nav-back/index.wxss */
+.nav-back {
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + 24rpx);
+  left: 24rpx;
+  z-index: 100;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: rgba(20, 12, 4, 0.75);
+  border: 1rpx solid rgba(212, 175, 55, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s;
+}
+
+.nav-back:active {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: #D4AF37;
+}
+
+.back-arrow {
+  font-size: 30rpx;
+  color: #D4AF37;
+  font-family: serif;
+  line-height: 1;
+}
