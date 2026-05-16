@@ -1,5 +1,5 @@
 // index.js
-const BGM_PATH = '/audio/bgm.mp3'  // 音乐文件路径，等你给我后再替换
+const BGM_PATH = '/audio/盖州风影.mp3'  // 盖州皮影戏背景音乐
 
 Page({
   data: {
