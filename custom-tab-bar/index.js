@@ -1,5 +1,5 @@
 // custom-tab-bar/index.js
-// 自定义底部导航栏 — 国风金色主题
+// 国风印章风格 — 底部导航栏
 
 Component({
   data: {
@@ -8,22 +8,22 @@ Component({
       {
         pagePath: '/pages/index/index',
         text: '首页',
-        iconClass: 'tab-home'
+        iconChar: '幕'
       },
       {
         pagePath: '/pages/interactive/interactive',
         text: '互动馆',
-        iconClass: 'tab-interactive'
+        iconChar: '戏'
       },
       {
         pagePath: '/pages/elder-chat/elder-chat',
         text: '作坊',
-        iconClass: 'tab-workshop'
+        iconChar: '刻'
       },
       {
         pagePath: '/pages/mine/mine',
         text: '我的',
-        iconClass: 'tab-mine'
+        iconChar: '我'
       }
     ]
   },
@@ -40,6 +40,9 @@ Component({
         url,
         success: () => {
           this.setData({ selected: index })
+        },
+        fail: (err) => {
+          console.error('switchTab fail:', err)
         }
       })
     }

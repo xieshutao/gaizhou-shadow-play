@@ -1,5 +1,5 @@
 <!-- custom-tab-bar/index.wxml -->
-<!-- 国风自定义底部导航栏 — 4个Tab -->
+<!-- 国风印章风格底部导航栏 -->
 
 <view class="tabbar">
   <view
@@ -9,20 +9,12 @@
     data-index="{{index}}"
     bindtap="switchTab"
   >
-    <!-- 图标区域 -->
-    <view class="tab-icon-wrap">
-      <view class="tab-icon {{item.iconClass}}">
-        <!-- CSS绘制的国风图标 -->
-        <view class="icon-shape"></view>
-      </view>
-      <!-- 选中态金色光晕 -->
-      <view class="icon-glow" wx:if="{{selected === index}}"></view>
+    <!-- 印章图标 -->
+    <view class="seal {{selected === index ? 'seal-active' : ''}}">
+      <text class="seal-char">{{item.iconChar}}</text>
     </view>
-    
-    <!-- 文字标签 -->
-    <text class="tab-label">{{item.text}}</text>
-    
-    <!-- 选中态顶部指示线 -->
-    <view class="tab-indicator" wx:if="{{selected === index}}"></view>
+
+    <!-- 标签 -->
+    <text class="tab-label {{selected === index ? 'label-active' : ''}}">{{item.text}}</text>
   </view>
 </view>
