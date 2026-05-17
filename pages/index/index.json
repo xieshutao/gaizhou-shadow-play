@@ -1,6 +1,4 @@
 {
   "navigationStyle": "custom",
-  "usingComponents": {
-    "gufeng-card": "/components/gufeng-card/gufeng-card"
-  }
+  "usingComponents": {}
 }

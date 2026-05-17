@@ -4,14 +4,7 @@ const BGM_PATH = '/audio/盖州风影.mp3'
 
 Page({
   data: {
-    isMusicPlaying: false,
-    homeCards: [
-      { title: '浏览皮影戏', desc: '欣赏经典盖州皮影剧目', meta: ['热门', '推荐'] },
-      { title: '学习制作', desc: '跟随老艺人学皮影雕刻技艺', meta: ['新手'] },
-      { title: 'AI 造戏', desc: '用 AI 生成属于你的皮影故事', meta: ['新功能', '尝鲜'] },
-      { title: '老易传音', desc: '与传承人面对面交流', meta: ['互动'] },
-      { title: '知识馆', desc: '皮影历史文化知识大全', meta: ['必读'] }
-    ]
+    isMusicPlaying: false
   },
 
   onLoad() {
@@ -67,26 +60,6 @@ Page({
   onTapFloatBtn() {
     sfx.play('tap')
     wx.switchTab({ url: '/pages/interactive/interactive' })
-  },
-
-  onCardTap(e) {
-    const { index } = e.detail
-    const routes = [
-      '/pages/knowledge/knowledge',
-      '/pages/knowledge/knowledge',
-      '/pages/ai-create/ai-create',
-      '/pages/interactive/interactive',
-      '/pages/knowledge/knowledge'
-    ]
-    const route = routes[index]
-    if (route) {
-      // tabBar 页面用 switchTab
-      if (route.includes('interactive')) {
-        wx.switchTab({ url: route })
-      } else {
-        wx.navigateTo({ url: route })
-      }
-    }
   },
 
   onShow() {
