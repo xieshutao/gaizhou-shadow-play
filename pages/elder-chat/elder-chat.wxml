@@ -28,13 +28,13 @@
     </view>
 
     <view class="char-spot char-master {{highlightedChar === 'master' ? 'char-glow' : ''}}" bindtap="onCharTapMaster">
-      <view class="char-label char-label-big"><text>老师傅</text></view>
+      <text class="char-tag">老师傅</text>
     </view>
     <view class="char-spot char-young {{highlightedChar === 'young' ? 'char-glow' : ''}}" bindtap="onCharTapYoung">
-      <view class="char-label char-label-big"><text>年轻学徒</text></view>
+      <text class="char-tag">年轻学徒</text>
     </view>
     <view class="char-spot char-teen {{highlightedChar === 'teen' ? 'char-glow' : ''}}" bindtap="onCharTapTeen">
-      <view class="char-label char-label-big"><text>小徒弟</text></view>
+      <text class="char-tag">小徒弟</text>
     </view>
   </view>
 

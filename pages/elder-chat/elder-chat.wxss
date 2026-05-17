@@ -21,41 +21,34 @@ page { height: 100vh; overflow: hidden; background: #000; }
 .hint-float { position:absolute; top:calc(env(safe-area-inset-top) + 280rpx); left:0; right:0; display:flex; justify-content:center; z-index:20; }
 .hint-float text { font-size:26rpx; color:#D4AF37; background:rgba(0,0,0,0.6); padding:10rpx 28rpx; border-radius:20rpx; border:1rpx solid rgba(212,175,55,0.3); }
 
-/* ── 大号可点文字标签 ── */
+/* ── 人物标注：轻量小字在人物旁边 ── */
 .char-spot {
   position: absolute;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8rpx;
-  padding: 40rpx 30rpx;
-  transition: transform 0.25s, filter 0.25s;
+  justify-content: center;
+  padding: 16rpx 20rpx;
+  transition: transform 0.25s;
 }
 
-.char-label-big {
-  padding: 24rpx 48rpx !important;
-  background: rgba(20, 10, 4, 0.8) !important;
-  border: 2rpx solid rgba(212, 175, 55, 0.4) !important;
-  border-radius: 16rpx !important;
-}
-.char-label-big text {
-  font-size: 38rpx !important;
-  color: #D4AF37 !important;
-  letter-spacing: 6rpx !important;
-  font-family: "SimSun", "宋体", serif !important;
+.char-tag {
+  font-size: 24rpx;
+  color: rgba(212, 175, 55, 0.75);
+  letter-spacing: 2rpx;
+  font-family: "SimSun", "宋体", serif;
+  text-shadow: 0 1rpx 4rpx rgba(0,0,0,0.8);
 }
 
 .char-glow {
-  transform: scale(1.12) !important;
+  transform: scale(1.15);
   z-index: 15;
 }
-.char-glow .char-label-big {
-  background: rgba(212, 175, 55, 0.2) !important;
-  border-color: #D4AF37 !important;
-  box-shadow: 0 0 30rpx rgba(212, 175, 55, 0.5) !important;
+.char-glow .char-tag {
+  color: #D4AF37;
+  text-shadow: 0 0 12rpx rgba(212, 175, 55, 0.7);
 }
 
-/* 调整人物位置 */
-.char-master { left: 50%; top: 38%; transform: translateX(-50%); }
-.char-young  { left: 50%; top: 54%; transform: translateX(-50%); }
-.char-teen   { left: 50%; top: 70%; transform: translateX(-50%); }
+/* 对齐图中人物位置 */
+.char-master { left: 8%; top: 48%; }   /* 老师傅：左侧老者 */
+.char-young  { left: 42%; top: 55%; }  /* 年轻学徒：中间青年 */
+.char-teen   { left: 6%; top: 72%; }   /* 小徒弟：左下角小女孩 */
