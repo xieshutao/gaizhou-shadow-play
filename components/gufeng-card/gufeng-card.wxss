@@ -8,8 +8,10 @@
 /* ── 卡片容器 ── */
 .gf-card {
   margin: 24rpx 28rpx;
-  background: var(--gf-bg);
-  border: 2rpx solid var(--gf-brown);
+  background: #F9F9F9;
+  background: var(--gf-bg, #F9F9F9);
+  border: 2rpx solid #A07345;
+  border: 2rpx solid var(--gf-brown, #A07345);
   border-radius: 16rpx;
   overflow: hidden;
   position: relative;
