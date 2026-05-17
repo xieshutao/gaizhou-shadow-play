@@ -40,32 +40,15 @@
     <image class="stage-img" src="/images/stage.png" mode="widthFix"></image>
   </view>
 
-  <!-- 卡片（ColorUI cu-card 结构 + 国风配色） -->
-  <view class="cu-card">
-    <view class="cu-item shadow-blur">
-      <view class="card-body">
-        <text class="card-title">光 影 之 间</text>
-        <view class="card-divider">
-          <view class="cd-line"></view>
-          <text class="cd-diamond">◆</text>
-          <view class="cd-line"></view>
-        </view>
-        <text class="card-sub">传 承 千 年</text>
-        <view class="card-quote">
-          <text>一口道尽千古事</text>
-          <text>双手对舞百万兵</text>
-        </view>
-      </view>
-    </view>
-  </view>
-
-  <!-- 右侧悬浮按钮 -->
+  <!-- 右侧悬浮按钮：SVG 即按钮 -->
   <view class="float-btn" bindtap="onTapFloatBtn">
-    <image class="play-icon" src="/images/gufeng/deco-vertical.svg" mode="aspectFit"></image>
-    <text class="btn-text">查</text>
-    <text class="btn-text">看</text>
-    <text class="btn-text">演</text>
-    <text class="btn-text">出</text>
+    <image class="btn-svg" src="/images/gufeng/deco-vertical.svg" mode="aspectFit"></image>
+    <view class="btn-text-overlay">
+      <text>查</text>
+      <text>看</text>
+      <text>演</text>
+      <text>出</text>
+    </view>
   </view>
 
 
