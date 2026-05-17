@@ -144,16 +144,16 @@ page {
 }
 
 .btn-svg {
-  width: 64rpx;
-  height: 214rpx;
+  width: 88rpx;
+  height: 228rpx;
 }
 
 .btn-text-overlay {
   position: absolute;
   top: 0;
   left: 0;
-  width: 64rpx;
-  height: 214rpx;
+  width: 88rpx;
+  height: 228rpx;
   display: flex;
   flex-direction: column;
   align-items: center;

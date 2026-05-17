@@ -42,7 +42,7 @@
 
   <!-- 右侧悬浮按钮：SVG 即按钮 -->
   <view class="float-btn" bindtap="onTapFloatBtn">
-    <image class="btn-svg" src="/images/gufeng/deco-vertical.svg" mode="aspectFit"></image>
+    <image class="btn-svg" src="/images/gufeng/group-25.svg" mode="aspectFit"></image>
     <view class="btn-text-overlay">
       <text>查</text>
       <text>看</text>
