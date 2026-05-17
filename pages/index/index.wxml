@@ -61,7 +61,7 @@
 
   <!-- 右侧悬浮按钮 -->
   <view class="float-btn" bindtap="onTapFloatBtn">
-    <image class="play-icon" src="/images/icon-1.png" mode="aspectFit"></image>
+    <image class="play-icon" src="/images/gufeng/deco-vertical.svg" mode="aspectFit"></image>
     <text class="btn-text">查</text>
     <text class="btn-text">看</text>
     <text class="btn-text">演</text>
