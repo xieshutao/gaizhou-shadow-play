@@ -1,5 +1,14 @@
 /* app.wxss — 盖州皮影戏 · 全局样式 */
 
+/* ===== 古风字体加载 ===== */
+@font-face {
+  font-family: "AlimamaDongFangDaKai";
+  src: url("https://cdn.jsdelivr.net/npm/alimama-fonts@1.0.0/AlimamaDongFangDaKai-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ===== 设计令牌 ===== */
 page {
   --gold: #D4AF37;
@@ -10,6 +19,12 @@ page {
   --text-primary: rgba(255, 240, 210, 0.9);
   --text-secondary: rgba(255, 255, 255, 0.45);
   --font-serif: "SimSun", "宋体", "Noto Serif CJK SC", serif;
+  --font-dakai: "AlimamaDongFangDaKai", "KaiTi", "STKaiti", "楷体", serif;
+  /* 古风卡片色板 */
+  --gf-red: #DB511F;
+  --gf-gold: #F0DFA3;
+  --gf-brown: #A07345;
+  --gf-bg: #F9F9F9;
 
   height: 100vh;
   background: #000;

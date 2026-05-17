@@ -1,0 +1,51 @@
+<!-- 古风列表卡片组件 -->
+<view class="gf-card">
+  <!-- 顶部装饰线 -->
+  <view class="gf-ornament-top">
+    <view class="gf-ornament-line"></view>
+    <view class="gf-ornament-diamond"></view>
+    <view class="gf-ornament-line"></view>
+  </view>
+
+  <!-- 标题区 -->
+  <view class="gf-header">
+    <view class="gf-title">{{title}}</view>
+    <view class="gf-subtitle" wx:if="{{subtitle}}">{{subtitle}}</view>
+  </view>
+
+  <!-- 列表容器 -->
+  <view class="gf-list">
+    <view
+      class="gf-item {{item.active ? 'gf-item-active' : ''}}"
+      wx:for="{{items}}"
+      wx:key="id"
+      data-index="{{index}}"
+      bindtap="onItemTap"
+    >
+      <!-- 左侧序号/图标 -->
+      <view class="gf-item-left">
+        <view class="gf-item-num" wx:if="{{!item.icon}}">{{index + 1}}</view>
+        <image class="gf-item-icon" wx:if="{{item.icon}}" src="{{item.icon}}" mode="aspectFit" />
+      </view>
+
+      <!-- 中间内容 -->
+      <view class="gf-item-body">
+        <view class="gf-item-title">{{item.title}}</view>
+        <view class="gf-item-desc" wx:if="{{item.desc}}">{{item.desc}}</view>
+        <view class="gf-item-meta" wx:if="{{item.meta}}">
+          <text wx:for="{{item.meta}}" wx:key="*this" wx:for-item="tag" class="gf-tag">{{tag}}</text>
+        </view>
+      </view>
+
+      <!-- 右侧箭头 -->
+      <view class="gf-item-arrow" wx:if="{{showArrow !== false}}">
+        <text class="gf-arrow-icon">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部装饰线 -->
+  <view class="gf-ornament-bottom">
+    <view class="gf-ornament-diamond"></view>
+  </view>
+</view>
