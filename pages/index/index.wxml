@@ -40,38 +40,13 @@
     <image class="stage-img" src="/images/stage.png" mode="widthFix"></image>
   </view>
 
-  <!-- 古风卡片 -->
-  <view class="gf-card-area">
-    <view class="gf-card-box">
-      <!-- 顶部装饰 -->
-      <view class="gf-deco-top">
-        <view class="gf-deco-line"></view>
-        <view class="gf-deco-diamond"></view>
-        <view class="gf-deco-line"></view>
-      </view>
-      <!-- 标题 -->
-      <view class="gf-title">参加流程</view>
-      <view class="gf-subtitle">传承皮影 · 有你有我</view>
-      <!-- 列表 -->
-      <view class="gf-list">
-        <view class="gf-item" wx:for="{{homeCards}}" wx:key="title" data-idx="{{index}}" bindtap="onCardTap">
-          <view class="gf-num">{{index + 1}}</view>
-          <view class="gf-body">
-            <view class="gf-item-title">{{item.title}}</view>
-            <view class="gf-item-desc">{{item.desc}}</view>
-            <view class="gf-tags" wx:if="{{item.meta}}">
-              <text class="gf-tag" wx:for="{{item.meta}}" wx:key="*this" wx:for-item="t">{{t}}</text>
-            </view>
-          </view>
-          <text class="gf-arrow">›</text>
-        </view>
-      </view>
-      <!-- 底部装饰 -->
-      <view class="gf-deco-bot">
-        <view class="gf-deco-diamond"></view>
-      </view>
-    </view>
-  </view>
+  <!-- 古风列表卡片 -->
+  <gufeng-card
+    title="参加流程"
+    subtitle="传承皮影 · 有你有我"
+    items="{{homeCards}}"
+    bind:itemtap="onCardTap"
+  />
 
   <!-- 右侧悬浮按钮 -->
   <view class="float-btn" bindtap="onTapFloatBtn">
